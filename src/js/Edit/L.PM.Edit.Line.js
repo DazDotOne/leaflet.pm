@@ -182,7 +182,7 @@ Edit.Line = Edit.extend({
     if (this._markerGroup) {
       this._markerGroup.clearLayers();
     }
-
+    
     // add markerGroup to map, markerGroup includes regular and middle markers
     this._markerGroup = new L.LayerGroup();
     this._markerGroup._pmTempLayer = true;
@@ -234,7 +234,9 @@ Edit.Line = Edit.extend({
       marker.on('contextmenu', this._removeMarker, this);
     }
 
-    this._markerGroup.addLayer(marker);
+    // this._markerGroup.addLayer(marker);
+    // temporary fix for large sets of polys
+    if( map.getBounds().contains(latlng)){ this._markerGroup.addLayer(marker); }
 
     return marker;
   },
